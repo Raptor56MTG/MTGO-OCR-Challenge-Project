@@ -2,8 +2,8 @@ import cv2
 import numpy as np
 import easyocr
 
-from cogs.config import IMAGE_PATH
-from cogs.utils import get_best_match_score, get_best_match_username, get_best_match_score_multi
+from cogs.config import IMAGE_PATH, VALID_SCORES, SCORE_REPLACE
+from cogs.utils import get_best_match_username, get_best_match_score_multi
 
 
 def split_long_box(coord, name, score):
@@ -130,14 +130,8 @@ def column_type(col):
     return 'Rank'
 
 
-VALID_SCORES = ('2-0', '2-1', '1-2', '0-2', '1-0', '0-1')
-VALID_SCORES_SPLIT = tuple(tuple(s.split('-')) for s in VALID_SCORES)
-
-score_replace = [('Z', '2'), ('Q', '0'), ('_', '-'), ('L', '1'), ('_', '-'), ('4', '-1'), ('-.', '-')]
-
-
 def get_best_game_score(score: str):
-    for a, b in score_replace:
+    for a, b in SCORE_REPLACE:
         score = score.replace(a, b)
 
     if score == '':
@@ -189,10 +183,22 @@ def process_results(results, img_shape):
     return df, (res, cols, rows)
 
 
+def clean_special_character(df):
+    """
+    Remove special character to csv.
+    """
+    df_ = []
+    for col in df:
+        df_.append([])
+        for s in col:
+            df_[-1].append(str(s).replace(',', '').replace('"', '').replace('\'', ''))
+    return df_
+
+
 def generate_csv_grid(path, df):
     try:
         with open(path, 'w') as file:
-            for row in zip(*df):
+            for row in zip(*clean_special_character(df)):
                 file.write(','.join(row) + '\n')
     except PermissionError:
         print('Please close output.csv')
@@ -214,7 +220,9 @@ def load_image(image_path):
     return resized, im_bw
 
 
-def run_easyocr_multi(image_path=IMAGE_PATH, output_csv="output.csv", output_image='image-displayed.png'):
+def run_easyocr_multi(image_path=IMAGE_PATH, output_csv="output.csv",
+                      output_image='image-displayed.png'):
+
     img, im_bw = load_image(image_path)
 
     reader = easyocr.Reader(['en'])

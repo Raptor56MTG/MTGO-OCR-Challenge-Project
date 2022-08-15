@@ -9,7 +9,6 @@ from cogs.sheetapi import load_csv_sheet, clear_sheet
 
 
 class BotCommands(commands.Cog):
-
     """This class holds all of the current bot commands."""
 
     def __init__(self, bot):
@@ -17,9 +16,9 @@ class BotCommands(commands.Cog):
 
     @commands.command(aliases=['Read', 'read', 'R', 'r'])
     async def read_standings(self, ctx):
-
         """This takes in the image for mtgo standings,
         and generates the csv for it."""
+
         try:
             image_url = ctx.message.attachments[0].url
             if (image_url[0:26] == 'https://cdn.discordapp.com' and
@@ -40,9 +39,7 @@ class BotCommands(commands.Cog):
                     await ctx.send(file=discord.File('image-displayed.png'))
                     await ctx.send(file=discord.File('output.csv'))
                     description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
-                                   "\n\nYou can copy paste this into the data collection sheet." +
-                                   "\nNOTE: I may have missed the highlighted name in the image."
-                                   "\nPlease review before copying.")
+                                   "\n\nYou can copy paste this into the data collection sheet.")
                     embed = discord.Embed(description=description, colour=discord.Color.blue())
                     file = discord.File("assets/google-sheets-logo.png")
                     embed.set_thumbnail(url='attachment://google-sheets-logo.png')
@@ -62,10 +59,11 @@ class BotCommands(commands.Cog):
                 colour=discord.Color.blue()
             ))
 
-    @commands.command(aliases=['ReadFull', 'readfull'])
+    @commands.command(aliases=['ReadFull', 'readfull', 'RF', 'Rf', 'rf'])
     async def read_full_standings(self, ctx):
         """This takes in the image for mtgo standings,
         and generates the csv for it."""
+
         try:
             image_url = ctx.message.attachments[0].url
             if (image_url[0:26] == 'https://cdn.discordapp.com' and
@@ -84,9 +82,7 @@ class BotCommands(commands.Cog):
                     await ctx.send(file=discord.File('image-displayed.png'))
                     await ctx.send(file=discord.File('output.csv'))
                     description = (f"Google sheet copy is available here: {config('DOCS_LINK')}" +
-                                   "\n\nYou can copy paste this into the data collection sheet." +
-                                   "\nNOTE: I may have missed the highlighted name in the image."
-                                   "\nPlease review before copying.")
+                                   "\n\nYou can copy paste this into the data collection sheet.")
                     embed = discord.Embed(description=description, colour=discord.Color.blue())
                     file = discord.File("assets/google-sheets-logo.png")
                     embed.set_thumbnail(url='attachment://google-sheets-logo.png')
@@ -106,9 +102,10 @@ class BotCommands(commands.Cog):
                 colour=discord.Color.blue()
             ))
 
-    @commands.command(aliases=['fix'])
+    @commands.command(aliases=['Fix', 'fix', 'F', 'f'])
     async def fix_full_standings(self, ctx):
         """This takes a link to the sheet wih standings, fix them and generates the csv for it."""
+
         url = ctx.message.content.strip().split(' ')[-1]
         if url[:39] == 'https://docs.google.com/spreadsheets/d/':
             await ctx.send(embed=discord.Embed(
@@ -138,11 +135,10 @@ class BotCommands(commands.Cog):
                 colour=discord.Color.blue()
             ))
 
-    @commands.command(aliases=['help', 'Help'])
+    @commands.command(aliases=['Help', 'help', 'H', 'h'])
     async def help_command(self, ctx, command: str = "default"):
-
-        """displays how to use each command for the bot.
-        By default the value is the default help command"""
+        """Displays how to use each command for the bot.
+        By default the value is the default help command."""
 
         try:
             fileName = f"{command.lower()}.txt"
@@ -165,8 +161,10 @@ class BotCommands(commands.Cog):
         else:
             await ctx.author.send(embed=embed)
 
-    @commands.command(aliases=['Code'])
+    @commands.command(aliases=['Code', 'C', 'c'])
     async def code(self, ctx):
+        """Links the source code for the bot."""
+
         embed = discord.Embed(
             title='My Source Code!',
             description=('You can find my source code here:' +

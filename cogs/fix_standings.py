@@ -6,8 +6,10 @@ This function aim to fix full standings directly into the Google sheet:
 The Google sheet is expected to have:
  * A list of reference name
  * Standings must be formatted along with:
-      "Rank, Name, Record-win, Record-loss, Round, Games-win, Games-loss, Round, Games-win, Games-loss, etc"
+      "Rank, Name, Record-win, Record-loss, Round, Games-win,
+      Games-loss, Round, Games-win, Games-loss, etc"
 """
+from cogs.config import VALID_SCORES_SPLIT
 from cogs.ocr_multicolumn import generate_csv_grid
 from cogs.sheetapi import get_sheet_by_url
 from cogs.utils import get_best_match_username_standings
@@ -78,10 +80,6 @@ def group_games_score(standings):
     return matches, positions
 
 
-VALID_SCORES = ('2-0', '2-1', '1-2', '0-2', '1-0', '0-1')
-VALID_SCORES_SPLIT = tuple(tuple(s.split('-')) for s in VALID_SCORES)
-
-
 def fix_score(standings):
     """
     Fix missing score by looking at the symmetric.
@@ -134,7 +132,7 @@ def fix_score(standings):
         if p1 is None and s is not None:
             missings.append(f'Missing opponent of {p0} round {rd}')
         elif s is None and p1 is not None:
-            missing_score.add(tuple(sorted((p0, p1)) + [rd]))  # do that to avoid double warning A vs B, B vs A
+            missing_score.add(tuple(sorted((p0, p1)) + [rd]))  # Avoid double warning A vs B, B vs A
 
         if len(vs) == 1:
             p1, s = vs[0]
@@ -196,5 +194,3 @@ def fix_standings(url, output_csv='output.csv'):
         message = ['Standings look good']
 
     return standings, '\n'.join(message)
-
-
