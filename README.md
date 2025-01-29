@@ -7,7 +7,7 @@ The current status of this repository is that is it not being actively maintaine
 
 - https://github.com/brossignol/MTGO-OCR-Challenge-Project
 
-I would like to thank the folks in the Legacy and Vintage data collection communities for continuing to develop and work on this codebase. All credit for future improvements and developments should go to them. As always, this code is available for anyone to use as they see fit.
+I would like to thank the folks in the Legacy and Vintage data collection communities for continuing to develop and work on this codebase. All credit for future improvements and developments should go to them. As always, this code is available for anyone to use in accordance with the MIT License listed below.
 
 ## Important Information / Common Questions
 
