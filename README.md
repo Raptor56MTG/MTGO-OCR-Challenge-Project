@@ -3,7 +3,7 @@ This uses OCR to assist with data collection of MTGO challenges and other high s
 
 ## Current Status
 
-The current status of this repository is that is it not being actively maintained as of January 2025. Libraries, python versions, and other factors may be out of date when you visit this page. From my current knowledge, this repository has been forked, and is being actively worked on and maintained here:
+The current status of this repository is that is it not being actively maintained as of January 2025. Libraries, python versions, and other factors may be out of date when you visit this page. This repository has been forked and is being actively worked on and maintained here:
 
 - https://github.com/brossignol/MTGO-OCR-Challenge-Project
 
